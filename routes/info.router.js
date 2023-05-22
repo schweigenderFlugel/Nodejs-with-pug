@@ -14,4 +14,11 @@ router.get('/', async (req, res, next) => {
     })
 })
 
+router.patch('/update-user-data/:id', async (req, res, next) => {
+     const data = await service.getInfo(id);
+     const update = await service.Update(body);
+}
+
+
+
 module.exports = router;
