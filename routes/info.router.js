@@ -6,14 +6,32 @@ const InfoService = require('../services/info.service');
 const service = new InfoService();
 
 router.get('/', async (req, res, next) => {
-    const data = await service.getInfo();
+    const info = await service.getInfo();
+    const news = await service.getNews();
+    
+    function getFullNews(item) {
+        return item.noticia;
+    }
+
     return res.render('info/index', {
-        description: data.info.description,
-        target: data.info.target,
-        footer: data.info.footer,
-        lorem: data.info.lorem,
-        moreInformation: data.info.moreInformation
+        description: info.info.description,
+        target: info.info.target,
+        footer: info.info.footer,
+        lorem: info.info.lorem,
+        moreInformation: info.info.moreInformation,
+        news: news.map(getFullNews)
     })
+})
+
+router.get('/news', async (req, res, next) => {
+    const news = await service.getNews();
+    res.status(200).json(news);
+})
+
+router.post('/', async (req, res, next) => {
+    const newData = req.body;
+    const newInfo = await service.createNews(newData);
+    res.status(201).json(newInfo)
 })
 
 module.exports = router;
