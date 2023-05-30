@@ -16,20 +16,4 @@ router.get('/', async (req, res, next) => {
     })
 })
 
-router.patch('/:id', async (req, res, next) => {
-    try {
-      const id = req.params;
-      const { title, description, footer } = req.body;
-      const data = await service.updateInfo(id, {
-        title,
-        description,
-        footer
-      });
-      res.status(201).json(data);
-    } catch (error) {
-      res.status(401);
-    }
-    
-})
-
 module.exports = router;
