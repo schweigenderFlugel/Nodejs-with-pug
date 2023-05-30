@@ -1,13 +1,13 @@
 const express = require('express');
 
 const infoRoutes = require('./info.router');
-const subscribeRoutes = require('./subscribe.router');
+const usersRoutes = require('./users.router');
 
-const routerApi = (app) => {
+const routerViews = (app) => {
     const router = express.Router();
     app.use('/v1/api', router);
     router.use('/info', infoRoutes);
-    router.use('/subscribe', subscribeRoutes);
+    router.use('/users', usersRoutes);
 }
 
-module.exports = routerApi;
+module.exports = routerViews;

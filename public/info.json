@@ -1,0 +1,12 @@
+{
+    "info": {
+        "description": "Esto es una página de prueba para desarrollar un proyecto de new relic. Más adelante estaremos dando más información",
+        "target": "Todavía estamos deliberando respecto al objetivo concreto de este proyecto",
+        "footer": "No contamos con fecha de publicación, por tanto la fecha está reservada",
+        "moreInformation": "Puedes unirte al chat para obtener información", 
+        "lorem": "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Officiis repudiandae explicabo aperiam dicta autem dolores facere sapiente amet rerum, dolorem dignissimos magnam veritatis accusantium nihil obcaecati mollitia voluptate recusandae est.",
+        "images": [
+            "artwork-01"
+        ]
+    }
+}

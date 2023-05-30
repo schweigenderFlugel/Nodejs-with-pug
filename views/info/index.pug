@@ -1,3 +1,19 @@
-h1= title
-h1= description
-footer= footer
+doctype html
+html 
+  head
+    meta(charset="UTF-8")
+    link(ref="../../public/css/info.css")
+
+body
+  h1(style={color: "red"}) Introducción
+  h2 Descripción
+  p= description
+  h2 Objetivos
+  p #{target}
+  p(styles="width: 60px")= lorem
+
+
+  br
+
+  footer= footer
+  img(src=`${images}`, alt="")
