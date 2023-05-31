@@ -9,9 +9,9 @@ router.get('/', async (req, res, next) => {
     const info = await service.getInfo();
     const news = await service.getNews();
     
-    function getFullNews(item) {
-        return item.noticia;
-    }
+    // function getFullNews(item) {
+    //     return item.noticia;
+    // }
 
     return res.render('info/index', {
         description: info.info.description,
@@ -19,7 +19,7 @@ router.get('/', async (req, res, next) => {
         footer: info.info.footer,
         lorem: info.info.lorem,
         moreInformation: info.info.moreInformation,
-        news: news.map(getFullNews)
+        news: news?.map((item) => ( item.noticia ))
     })
 })
 

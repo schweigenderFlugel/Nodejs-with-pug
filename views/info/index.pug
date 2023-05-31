@@ -2,20 +2,20 @@ doctype html
 html 
   head
     meta(charset="UTF-8")
-    link(ref="../../public/css/info.css")
+    link(rel='stylesheet', href='/css/style.css')
 
 body
-  h1(style={color: "red"}) Introducción
+  h1 Introducción
   h2 Descripción
   p= description
   h2 Objetivos
   p #{target}
   p(styles="width: 60px")= lorem
 
-
-  br
-
-  p= news
+  
+  div.contenido
+    each noticia in news
+      p.news= noticia
 
   footer= footer
   img(src=`${images}`, alt="")

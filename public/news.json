@@ -1,10 +1,14 @@
 [
   {
-    "noticia": "Mañana se llevará a cabo una importante reunión en la fundación 'Puente vincular'",
+    "noticia": "Mañana se llevará a cabo una importante reunión en la fundación 'Puente vincular'.",
     "id": 1
   },
   {
-    "noticia": "Se registró un importante aumento de la actividad en el cráter del Nevado de Ruíz",
+    "noticia": "Se registró un importante aumento de la actividad en el cráter del Nevado de Ruíz.",
     "id": 2
+  },
+  {
+    "noticia": "Dentro de unos días se llevará a cabo una entrevista a reconocido profesional en el campo de la inteligencia artificial",
+    "id": 3
   }
 ]
