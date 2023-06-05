@@ -18,6 +18,7 @@ router.get('/', async (req, res, next) => {
         target: info.info.target,
         footer: info.info.footer,
         lorem: info.info.lorem,
+        images: info.info.images,
         moreInformation: info.info.moreInformation,
         news: news?.map((item) => ( item.noticia ))
     })
@@ -28,10 +29,23 @@ router.get('/news', async (req, res, next) => {
     res.status(200).json(news);
 })
 
+router.get('/news/:id', async (req, res, next) => {
+    const { id } = req.params;
+    const news = await service.getNewsById(id);
+    res.status(200).json(news);
+})
+
 router.post('/', async (req, res, next) => {
     const newData = req.body;
     const newInfo = await service.createNews(newData);
     res.status(201).json(newInfo)
+})
+
+router.patch('news/:id', async (req, res, next) => {
+    const { id } = req.params;
+    const changes = req.body;
+    const news = await service.updateInfo(id, changes);
+    res.status(201).json(news);
 })
 
 module.exports = router;

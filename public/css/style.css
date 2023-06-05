@@ -7,17 +7,31 @@ h2 {
 }
 
 .contenido {
-    justify-content: center;
     width: 1200px;
-    text-align: center;
 }
 
-.news {
+.caja {
+    text-align: center;
     display: inline-block;
-    background-color: grey;
+    width: 250px;
+    background-color: gray;
+    margin-left: 20px;
+    top: 0;
+}
+
+img {
+    width: 200px;
     padding: 10px;
-    width: 300px;
+}
+
+.caja__content {
+    padding: 10px;
     font-size: 20px;
     font-weight: bold;
     margin: 20px;
+
+}
+
+.inactive {
+    display: none;
 }

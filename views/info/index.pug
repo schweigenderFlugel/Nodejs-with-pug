@@ -12,13 +12,12 @@ body
   p #{target}
   p(styles="width: 60px")= lorem
 
-  
-  div.contenido
+  main.contenido
     each noticia in news
-      p.news= noticia
+      .caja
+        img(src=`${images}`, alt="artwork-01.jpg")
+        .caja__content: p=noticia
+
+        
 
   footer= footer
-  img(src=`${images}`, alt="")
-
-script(src="/socket.io/socket.io.js")
-script var socket = io();
