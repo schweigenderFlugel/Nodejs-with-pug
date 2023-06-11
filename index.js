@@ -19,19 +19,20 @@ app.set("views", path.join(__dirname, "/views"));
 app.use(express.json());
 
 app.use(express.urlencoded({ extended: false }));
-app.use(express.static("public"));
+app.use(express.static(path.join(__dirname, "public")));
 
-// Muestra
+// MUESTRA DE EXPRESS
 app.get("/", (req, res) => {
   res.send("Estoy escuchando desde mi express");
 });
 
+// RUTAS DE LAS VISTAS
+routerViews(app);
+
 // SOCKET.IO
 socketIoServerSide(io)
 
-routerViews(app);
-
 // LISTEN
 httpServer.listen(3000, () => {
-  console.log("Estoy escuchando por el puerto 3000");
+  console.log(`Estoy escuchando por el puerto ${config.port}`);
 });

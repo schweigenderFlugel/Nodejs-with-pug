@@ -1,6 +1,7 @@
 const fs = require("fs");
 const util = require("util");
 const path = require("path");
+const boom = require('@hapi/boom')
 
 const readFile = util.promisify(fs.readFile);
 const writeFile = util.promisify(fs.writeFile);
@@ -38,9 +39,7 @@ class InfoService {
     const newNews = JSON.stringify(news, null, 2);
     await writeFile(this.news, newNews, (error) => {
       if (error) {
-        throw boom.notAcceptable("Faltan datos");
-      } else {
-        console.log(newData);
+        throw new Error(boom.notFound("Ha ocurrido un error al escribir el archivo"));
       }
     });
     return newData;
@@ -49,27 +48,32 @@ class InfoService {
   async updateNews(id, changes) {
     const data = await readFile(this.news, "utf8");
     const news = JSON.parse(data);
-    news.forEach((noticia) => {
+    news.forEach(async newData => {
+      if (newData.id === id) {
+          newData.noticia = changes;
+          const newNews = JSON.stringify(newData.noticia, null, 2);
+          await writeFile(this.news, newNews, (error) => {
+            if (error) {
+              throw new Error(boom.notFound("Ha ocurrido un error al escribir el archivo"));
+            }
+          })
+        };
+      })
+      return changes;
+    };
+
+  async deleteNews(id) {
+    const data = await readFile(this.news, "utf8");
+    const news = JSON.parse(data);
+    const newsId = news.id;
+    id = newsId;
+    news.forEach(noticia => {
       if (noticia.id === id) {
-        if (changes != undefined) {
-          news.noticia = changes;
-        }
-        const newNews = JSON.stringify(news, null, 2);
-        writeFile(this.news, newNews);
+        news.splice(news.indexOf(noticia), 1)
       }
-    });
+    })
   }
-  
-  async updateInfo(id, body) {
-    const info = await readFile(this.datafile, "utf8");
-    const data = JSON.parse(info);
-    if (data.id === id) {
-      const newInfo = JSON.stringify(body);
-      // fs.writeFile( file, data, options, callback )
-      await writeFile(this.datafile, newInfo);
-      return newInfo;
-    }
-  }
+
 }
 
 module.exports = InfoService;

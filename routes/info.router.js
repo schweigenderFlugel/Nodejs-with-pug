@@ -35,16 +35,16 @@ router.get('/news/:id', async (req, res, next) => {
     res.status(200).json(news);
 })
 
-router.post('/', async (req, res, next) => {
+router.post('/news', async (req, res, next) => {
     const newData = req.body;
     const newInfo = await service.createNews(newData);
     res.status(201).json(newInfo)
 })
 
-router.patch('news/:id', async (req, res, next) => {
-    const { id } = req.params;
+router.patch('/news/:id', async (req, res, next) => {
+    const { id } = req.params.id;
     const changes = req.body;
-    const news = await service.updateInfo(id, changes);
+    const news = await service.updateNews(id, changes);
     res.status(201).json(news);
 })
 

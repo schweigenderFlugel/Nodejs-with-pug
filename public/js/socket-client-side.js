@@ -34,6 +34,7 @@ const emitToServer = document.querySelector("#emit-to-server");
 emitToServer.addEventListener("click", () => {
     socket.emit("server", "Hola, servidor");
 })
+
 socket.on("everyone", message => {
     const text = document.querySelector("#user-connected");
     text.textContent = message;

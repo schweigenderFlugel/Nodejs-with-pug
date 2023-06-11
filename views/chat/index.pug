@@ -1,15 +1,17 @@
-doctype html
-html 
-  head
-    meta(charset="UTF-8")
-    link(rel='stylesheet', href='/css/style.css')
+extends ../layout/index
+block content 
+  body
+    h1 Socket Io
+    h2 Aquí tendrá lugar una sala de chat en tiempo real
+    h2#text
+    h2#user-connected
+    button#emit-to-server.btn Entrar
 
-body
-  h1 Socket Io
-  h2 Objetivos
-  h2#text
-  h2#user-connected
-  button#emit-to-server Presioname
+    main.container.py-2
+      form.text(action="#" method="post") 
+        div
+          textarea#text.area.form-control.w-50(name="" rows="5")
+          button.btn.btn-primary Enviar
     
-script(src="/socket.io/socket.io.js")
-script(src=`${socket}`)
+    script(src="/socket.io/socket.io.js")
+    script(src=`${socket}`)
