@@ -6,9 +6,19 @@ const collection = new ArticlesColletion();
 class ArticlesService {
   constructor() {}
 
+  async getArticles() {
+    const getAllArticles = await collection.getAllArticles();
+    return getAllArticles;
+  }
+
   async createArticles(newData) {
-    const newArticle = await collection.insertArticle({ ...newData });
+    await collection.insertArticle(newData);
     return newData;
+  }
+
+  async updateArticles(id, changes) {
+    await collection.updateArticle(id, changes);
+    return changes;
   }
 }
 
