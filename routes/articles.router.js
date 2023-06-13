@@ -22,4 +22,10 @@ routes.patch("/:id", async (req, res, next) => {
   res.status(201).json(newArticle);
 });
 
+routes.delete(":/id", async (req, res, next) => {
+  const { id } = req.params.id;
+  await service.deleteArticle(id);
+  res.status(201);
+})
+
 module.exports = routes;

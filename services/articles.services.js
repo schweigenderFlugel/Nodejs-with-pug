@@ -20,6 +20,10 @@ class ArticlesService {
     await collection.updateArticle(id, changes);
     return changes;
   }
+
+  async deleteArticle(id) {
+    await collection.deleteArticle(id);
+  }
 }
 
 module.exports = ArticlesService;
