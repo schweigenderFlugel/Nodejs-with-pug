@@ -1,5 +1,4 @@
-const ArticlesColletion = require("../database/connection");
-const boom = require("@hapi/boom");
+const ArticlesColletion = require("../database/articles.store");
 
 const collection = new ArticlesColletion();
 
@@ -7,22 +6,28 @@ class ArticlesService {
   constructor() {}
 
   async getArticles() {
-    const getAllArticles = await collection.getAllArticles();
-    return getAllArticles;
+    const data = await collection.getAllArticles();
+    return data;
+  }
+
+  async getArticleById(id) {
+    const data = await collection.getArticleById(id);
+    return data;
   }
 
   async createArticles(newData) {
-    await collection.insertArticle(newData);
+    await collection.createArticle(newData);
     return newData;
   }
 
   async updateArticles(id, changes) {
-    await collection.updateArticle(id, changes);
-    return changes;
+    const message = await collection.updateArticle(id, changes);
+    return message;
   }
 
-  async deleteArticle(id) {
-    await collection.deleteArticle(id);
+  async deleteArticles(id) {
+    const message = await collection.deleteArticle(id);
+    return message;
   }
 }
 

@@ -1,15 +1,21 @@
-import mongoose from 'mongoose';
-const { Schema } = mongoose;
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
 const ArticlesSchema = new Schema({
-  title: String,
-  author: String,
-  body: String,
-  comments: [{ body: String, date: Date }],
-  date: { type: Date, default: Date.now },
-  hidden: Boolean,
-  meta: {
-    votes: Number,
-    favs: Number
-  }
+  title: {
+    type: String,
+    required: true,
+  },
+  author: {
+    type: String,
+    required: true 
+  }, 
+  content: {
+    type: String,
+    required: true,
+  },
+  
 });
+
+const ArticlesModel = mongoose.model('Articles', ArticlesSchema);
+module.exports = ArticlesModel;

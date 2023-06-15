@@ -1,5 +1,4 @@
 const express = require('express');
-
 const router = express.Router();
 const InfoService = require('../services/info.service');
 
