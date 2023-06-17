@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const CommentsSchema = new Schema({
-  comment: {
+  content: {
     type: String,
     required: true,
   },
@@ -10,13 +10,11 @@ const CommentsSchema = new Schema({
     type: String,
     required: true 
   }, 
-  _articleId: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: 'articles',
-    }
-  ]
+  article: [{
+      type: Schema.Types.ObjectId, 
+      ref: 'Articles' 
+    }]
 });
 
-const ArticlesModel = mongoose.model('Comments', CommentsSchema);
-module.exports = ArticlesModel;
+const CommentsModel = mongoose.model('Comments', CommentsSchema);
+module.exports = CommentsModel;

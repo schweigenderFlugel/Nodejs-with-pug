@@ -41,10 +41,16 @@ router.post('/news', async (req, res, next) => {
 })
 
 router.patch('/news/:id', async (req, res, next) => {
-    const { id } = req.params.id;
+    const { id } = req.params;
     const changes = req.body;
     const news = await service.updateNews(id, changes);
     res.status(201).json(news);
+})
+
+router.delete('/news/:id', async (req, res, next) => {
+    const { id } = req.params;
+    const message = await service.deleteNews(id);
+    res.status(201).json(message);
 })
 
 module.exports = router;

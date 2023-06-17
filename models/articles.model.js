@@ -14,7 +14,6 @@ const ArticlesSchema = new Schema({
     type: String,
     required: true,
   },
-  
 });
 
 const ArticlesModel = mongoose.model('Articles', ArticlesSchema);

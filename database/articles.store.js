@@ -1,11 +1,6 @@
 const mongoose = require("mongoose");
 const boom = require("@hapi/boom");
-const config = require("../config/config");
 const ArticlesModel = require("../models/articles.model");
-
-mongoose
-  .connect(config.mongodbUri)
-  .then(() => console.log("Connected to mongodb!"));
 
 class ArticlesColletion {
   async getAllArticles() {

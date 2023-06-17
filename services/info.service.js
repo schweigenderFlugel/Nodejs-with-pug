@@ -1,7 +1,7 @@
 const fs = require("fs");
 const util = require("util");
 const path = require("path");
-const boom = require('@hapi/boom')
+const boom = require("@hapi/boom");
 
 const readFile = util.promisify(fs.readFile);
 const writeFile = util.promisify(fs.writeFile);
@@ -39,7 +39,9 @@ class InfoService {
     const newNews = JSON.stringify(news, null, 2);
     await writeFile(this.news, newNews, (error) => {
       if (error) {
-        throw new Error(boom.notFound("Ha ocurrido un error al escribir el archivo"));
+        throw new Error(
+          boom.notFound("Ha ocurrido un error al escribir el archivo")
+        );
       }
     });
     return newData;
@@ -48,30 +50,44 @@ class InfoService {
   async updateNews(id, changes) {
     const data = await readFile(this.news, "utf8");
     const news = JSON.parse(data);
-    news.forEach(async newData => {
-      if (newData.id === id) {
-          newData.noticia = changes;
-          const newNews = JSON.stringify(newData.noticia, null, 2);
-          await writeFile(this.news, newNews, (error) => {
-            if (error) {
-              throw new Error(boom.notFound("Ha ocurrido un error al escribir el archivo"));
-            }
-          })
-        };
-      })
-      return changes;
-    };
+    news.forEach((item) => {
+      if (item.id == id) {
+        if (changes.noticia != undefined) {
+          item.noticia = changes.noticia;
+        }
+        if (changes.images != undefined) {
+          item.images = changes.images;
+        }
+        const newNews = JSON.stringify(news, null, 2);
+        writeFile(this.news, newNews, (error) => {
+          if (error) {
+            throw new Error(
+              boom.notFound("Ha ocurrido un error al escribir el archivo")
+            );
+          }
+        });
+      }
+    });
+    return changes;
+  }
 
   async deleteNews(id) {
     const data = await readFile(this.news, "utf8");
     const news = JSON.parse(data);
-    const newsId = news.id;
-    id = newsId;
-    news.forEach(noticia => {
-      if (noticia.id === id) {
-        news.splice(news.indexOf(noticia), 1)
+    news.forEach((item) => {
+      if (item.id == id) {
+        news.splice(news.indexOf(item), 1);
       }
-    })
+      const deletedNews = JSON.stringify(news, null, 2);
+        writeFile(this.news, deletedNews, (error) => {
+          if (error) {
+            throw new Error(
+              boom.notFound("Ha ocurrido un error al escribir el archivo")
+            );
+          }
+        })
+    });
+    return 'erased';
   }
 
 }
