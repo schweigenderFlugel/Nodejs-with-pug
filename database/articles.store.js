@@ -1,10 +1,11 @@
 const mongoose = require("mongoose");
 const boom = require("@hapi/boom");
 const ArticlesModel = require("../models/articles.model");
+require("../models/comments.model");
 
 class ArticlesColletion {
   async getAllArticles() {
-    const articles = await ArticlesModel.find();
+    const articles = await ArticlesModel.find().populate('comments').exec();
     if (articles.length === 0) {
       return boom.notFound("No data in the database");
     }
@@ -21,14 +22,24 @@ class ArticlesColletion {
   }
 
   async createArticle(newData) {
-    await ArticlesModel.create(newData);
+    await ArticlesModel.create({
+      ...newData,
+      createdAt: new Date(),
+    });
   }
 
   async updateArticle(id, changes) {
-    await ArticlesModel.findOneAndUpdate(id, changes);
-    return "Modified successfully";
+    const updatedArticle = await ArticlesModel.findOneAndUpdate({
+      id, 
+      title: changes.title,
+      author: changes.author,
+      content: changes.content,
+      updatedAt: new Date(),
+      $push: { comments: changes.comments }
+    });
+    return updatedArticle;
   }
-
+  
   async deleteArticle(id) {
     const valid = mongoose.isValidObjectId(id);
     if (valid) {

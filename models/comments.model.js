@@ -8,7 +8,7 @@ const CommentsSchema = new Schema({
   },
   user: {
     type: String,
-    required: true 
+    required: true,
   }, 
   article: [{
       type: Schema.Types.ObjectId, 

@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const boom = require("@hapi/boom");
 const CommentsModel = require("../models/comments.model");
-const ArticlesModel = require("../models/articles.model");
+require("../models/articles.model");
 
 class CommentsColletion {
   async getAllComments() {
