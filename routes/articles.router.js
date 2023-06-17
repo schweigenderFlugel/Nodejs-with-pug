@@ -2,19 +2,19 @@ const express = require("express");
 const routes = express.Router();
 const ArticlesService = require("../services/articles.services");
 const validatorHandler = require('../middlewares/validator.handler');
-const { createArticleSchema } = require("../schemas/articles.schema");
+const { createArticleSchema, updateArticleSchema } = require("../schemas/articles.schema");
 
 const service = new ArticlesService();
 
 routes.get("/", async (req, res ,next) => {
   const articles = await service.getArticles();
-  res.status(201).json(articles)
+  res.status(200).json(articles)
 })
 
 routes.get("/:id", async (req, res ,next) => {
   const id  = req.params.id;
   const article = await service.getArticleById(id);
-  res.status(201).json(article)
+  res.status(200).json(article)
 })
 
 routes.post("/", 
@@ -25,11 +25,13 @@ routes.post("/",
     res.status(201).json(newArticle);
 });
 
-routes.patch("/:id", async (req, res, next) => {
-  const { id } = req.params.id;
-  const changes = req.body;
-  const newArticle = await service.updateArticles(id, changes);
-  res.status(201).json(newArticle);
+routes.patch("/:id", 
+  validatorHandler(updateArticleSchema, 'body'),
+  async (req, res, next) => {
+    const id = req.params.id;
+    const changes = req.body;
+    const modifiedArticle = await service.updateArticles(id, changes);
+    res.status(201).json(modifiedArticle);
 });
 
 routes.delete("/:id", async (req, res, next) => {

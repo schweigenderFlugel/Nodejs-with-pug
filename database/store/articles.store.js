@@ -2,12 +2,16 @@ const mongoose = require("mongoose");
 const boom = require("@hapi/boom");
 const ArticlesModel = require("../models/articles.model");
 require("../models/comments.model");
+require("../models/categories.model");
 
 class ArticlesColletion {
   async getAllArticles() {
-    const articles = await ArticlesModel.find().populate('comments').exec();
+    const articles = await ArticlesModel.find()
+      .populate({ path: "comments", select: 'content' })
+      .populate({ path: "categories", select: 'name'})
+      .exec();
     if (articles.length === 0) {
-      return boom.notFound("No data in the database");
+      return boom.badRequest("ObjectId invalid!");
     }
     return articles;
   }
@@ -15,10 +19,13 @@ class ArticlesColletion {
   async getArticleById(id) {
     const valid = mongoose.isValidObjectId(id);
     if (valid) {
-      const article = await ArticlesModel.findById(id);
+      const article = await ArticlesModel.findById(id)
+        .populate({ path: "comments", select: 'content' })
+        .populate({ path: "categories", select: 'name'})
+        .exec();
       return article;
     }
-    return boom.notFound("ObjectId invalid!");
+    return boom.badRequest("ObjectId invalid!");
   }
 
   async createArticle(newData) {
@@ -30,23 +37,23 @@ class ArticlesColletion {
 
   async updateArticle(id, changes) {
     const updatedArticle = await ArticlesModel.findOneAndUpdate({
-      id, 
+      id,
       title: changes.title,
       author: changes.author,
       content: changes.content,
       updatedAt: new Date(),
-      $push: { comments: changes.comments }
+      $push: { comments: changes.comments, categories: changes.categories },
     });
     return updatedArticle;
   }
-  
+
   async deleteArticle(id) {
     const valid = mongoose.isValidObjectId(id);
     if (valid) {
       await ArticlesModel.deleteOne({ _id: id });
       return "Successfully erased";
-    } 
-    return boom.notFound("ObjectId invalid!");
+    }
+    return boom.badRequest("ObjectId invalid!");
   }
 }
 

@@ -1,4 +1,4 @@
-const ArticlesColletion = require("../database/articles.store");
+const ArticlesColletion = require("../database/store/articles.store");
 
 const collection = new ArticlesColletion();
 

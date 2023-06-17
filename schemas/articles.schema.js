@@ -3,6 +3,8 @@ const Joi = require('joi');
 const title = Joi.string().max(50);
 const author = Joi.string().max(20);
 const content = Joi.string().min(20);
+const comments = Joi.string();
+const categories = Joi.string();
 
 const createArticleSchema = Joi.object({
     title: title.required(),
@@ -14,6 +16,8 @@ const updateArticleSchema = Joi.object({
     title: title,
     author: author,
     content: content, 
+    comments: comments,
+    categories: categories
 })
 
 module.exports = { createArticleSchema, updateArticleSchema }

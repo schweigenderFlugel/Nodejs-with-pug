@@ -5,7 +5,9 @@ require("../models/articles.model");
 
 class CommentsColletion {
   async getAllComments() {
-    const comments = await CommentsModel.find().populate('article').exec();
+    const comments = await CommentsModel.find()
+      .populate('article')
+      .exec();
     if (comments.length === 0) {
       return boom.notFound("No data in the database");
     }
@@ -16,7 +18,8 @@ class CommentsColletion {
     const valid = mongoose.isValidObjectId(id);
     if (valid) {
       const comment = await CommentsModel.findById(id)
-        .populate('articles');
+        .populate('article')
+        .exec();
       return comment;
     }
     return boom.notFound("ObjectId invalid!");

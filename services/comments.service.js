@@ -1,4 +1,4 @@
-const CommentsColletion = require("../database/comments.store");
+const CommentsColletion = require("../database/store/comments.store");
 
 const collection = new CommentsColletion();
 
@@ -20,8 +20,8 @@ class CommentsService {
     return newData;
   }
 
-  async updateComments(id, changes) {
-    const message = await collection.updateComment(id, changes);
+  async updateComments(id) {
+    const message = await collection.updateComment(id);
     return message;
   }
 
