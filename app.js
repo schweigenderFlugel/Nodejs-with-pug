@@ -39,7 +39,7 @@ const createApp = () => {
     .connect(config.mongodbUri)
     .then(() => console.log("Connected to mongodb!"));
 
-  return app;
+  return httpServer;
   
 };
 

@@ -7,11 +7,14 @@ block content
     h2#user-connected
     button#emit-to-server.btn Entrar
 
+    main#chat-messages
+
     main.container.py-2
-      form.text(action="#" method="post") 
-        div
-          textarea#text.area.form-control.w-50(name="" rows="5")
-          button.btn.btn-primary Enviar
+      form#chat-form
+        div.input-group.mb-3.w-50
+          input#msg.form-control(name="" rows="5")
+          div.input-group-append
+            button.btn.btn-secondary Enviar
     
     script(src="/socket.io/socket.io.js")
     script(src=`${socket}`)

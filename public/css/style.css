@@ -65,9 +65,7 @@
     background-color: rgb(62, 199, 62);
   }
 
-  .text-area {
-    display: none;
-    resize: none;
-    border: 1px solid black;
-    margin-bottom: 20px;
+  #chat-messages {
+    text-align: end;
+    margin-left: 50px;
   }
