@@ -1,12 +1,11 @@
-const mongoose = require("mongoose");
 const boom = require("@hapi/boom");
-const CommentsModel = require("../models/comments.model");
-require("../models/articles.model");
+const mongoose = require('mongoose');
+const { CommentsModel } = require('./connection');
 
 class CommentsColletion {
   async getAllComments() {
     const comments = await CommentsModel.find()
-      .populate('article')
+      .populate({ path: 'article', select: 'title' })
       .exec();
     if (comments.length === 0) {
       return boom.notFound("No data in the database");

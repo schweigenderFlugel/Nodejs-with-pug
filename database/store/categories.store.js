@@ -1,6 +1,6 @@
-const mongoose = require("mongoose");
 const boom = require("@hapi/boom");
-const CategoriesModel = require("../models/categories.model");
+const mongoose = require('mongoose');
+const { CategoriesModel } = require('./connection')
 
 class CategoriesCollection {
   async getAllCategories() {

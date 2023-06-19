@@ -1,15 +1,13 @@
-const mongoose = require("mongoose");
 const boom = require("@hapi/boom");
-const ArticlesModel = require("../models/articles.model");
-
-require("../models/comments.model");
-require("../models/categories.model");
+const mongoose = require('mongoose');
+const { ArticlesModel } = require('./connection');
 
 class ArticlesColletion {
   async getAllArticles() {
     const articles = await ArticlesModel.find()
       .populate({ path: "comments" })
       .populate({ path: "categories", select: 'name'})
+      .limit(5)
     if (articles.length === 0) {
       return boom.badRequest("ObjectId invalid!");
     }

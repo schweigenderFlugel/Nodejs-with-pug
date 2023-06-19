@@ -2,12 +2,10 @@ const express = require("express");
 const path = require("path");
 const { createServer } = require("http");
 const { Server } = require("socket.io");
-const mongoose = require("mongoose");
 const socketIoServerSide = require('./utils/socket-server-side');
 
 const createApp = () => {
   const routerViews = require("./routes");
-  const config = require("./config/config");
 
   const app = express();
   const httpServer = createServer(app);
@@ -33,12 +31,7 @@ const createApp = () => {
 
   // SOCKET.IO
   socketIoServerSide(io);
-
-  // DATABASE
-  mongoose
-    .connect(config.mongodbUri)
-    .then(() => console.log("Connected to mongodb!"));
-
+ 
   return httpServer;
   
 };
