@@ -8,9 +8,6 @@ class ArticlesColletion {
       .populate({ path: "comments" })
       .populate({ path: "categories", select: 'name'})
       .limit(5)
-    if (articles.length === 0) {
-      return boom.badRequest("ObjectId invalid!");
-    }
     return articles;
   }
 
@@ -20,10 +17,8 @@ class ArticlesColletion {
       const article = await ArticlesModel.findById(id)
         .populate({ path: "comments", select: 'content' })
         .populate({ path: "categories", select: 'name'})
-        .exec();
       return article;
     }
-    return boom.badRequest("ObjectId invalid!");
   }
 
   async createArticle(newData) {
@@ -46,7 +41,6 @@ class ArticlesColletion {
       });
       return updatedArticle;
     }
-    return boom.badRequest("ObjectId invalid!");
   }
 
   async deleteArticle(id) {
@@ -55,7 +49,6 @@ class ArticlesColletion {
       await ArticlesModel.deleteOne({ _id: id });
       return "Successfully erased";
     }
-    return boom.badRequest("ObjectId invalid!");
   }
 }
 

@@ -1,18 +1,23 @@
+const boom = require("@hapi/boom");
 const ArticlesColletion = require("../database/store/articles.store");
 
 const collection = new ArticlesColletion();
 
 class ArticlesService {
-  constructor() {}
-
   async getArticles() {
-    const data = await collection.getAllArticles();
-    return data;
+    const articles = await collection.getAllArticles();
+    if (articles.length === 0) {
+      throw boom.notFound('no articles');
+    }
+    return articles;
   }
 
   async getArticleById(id) {
-    const data = await collection.getArticleById(id);
-    return data;
+    const article = await collection.getArticleById(id);
+    if (!article) {
+      throw boom.notFound('article not found!');
+    }
+    return article;
   }
 
   async createArticles(newData) {
@@ -21,12 +26,18 @@ class ArticlesService {
   }
 
   async updateArticles(id, changes) {
-    const message = await collection.updateArticle(id, changes);
-    return message;
+    const updatedArticle = await collection.updateArticle(id, changes);
+    if (!updatedArticle) {
+      throw boom.notFound('article not found!');
+    }
+    return updatedArticle;
   }
 
   async deleteArticles(id) {
     const message = await collection.deleteArticle(id);
+    if (!message) {
+      throw boom.notFound('article not found!');
+    }
     return message;
   }
 }
