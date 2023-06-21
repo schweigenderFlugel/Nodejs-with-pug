@@ -1,17 +1,22 @@
+const boom = require("@hapi/boom");
 const CategoriesCollection = require("../database/store/categories.store");
 
 const collection = new CategoriesCollection();
 
 class CategoriesService {
-  constructor() {}
-
   async getCategories() {
-    const data = await collection.getAllCategories();
-    return data;
+    const categories = await collection.getAllCategories();
+    if (categories === 0) {
+      throw boom.notFound('No Categories Found!');
+    }
+    return categories;
   }
 
   async getCategoryById(id) {
-    const data = await collection.getArticleById(id);
+    const category = await collection.getArticleById(id);
+    if (!category) {
+      throw boom.notFound('Category Not Found!')
+    }
     return data;
   }
 
@@ -20,9 +25,12 @@ class CategoriesService {
     return newData;
   }
 
-  async deleteArticles(id) {
-    const message = await collection.deleteCategory(id);
-    return message;
+  async deleteCategories(id) {
+    const deletedCategory = await collection.deleteCategory(id);
+    if (!category) {
+      throw boom.notFound('Category Not Found!')
+    }
+    return deletedCategory;
   }
 }
 
