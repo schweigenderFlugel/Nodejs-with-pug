@@ -5,7 +5,7 @@ const { Server } = require("socket.io");
 
 const routerViews = require("./routes");
 const socketIoServerSide = require('./utils/socket-server-side');
-const { logErrors, boomErrorHandler, errorHandler } = require("./middlewares/error.handler");
+const { boomErrorHandler, errorHandler } = require("./middlewares/error.handler");
 
 const createApp = () => {
 
@@ -34,7 +34,6 @@ const createApp = () => {
   routerViews(app);
 
   // ERRORS HANDLERS
-  app.use(logErrors);
   app.use(boomErrorHandler);
   app.use(errorHandler);
  

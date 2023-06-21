@@ -8,7 +8,7 @@ const router = express.Router();
 const service = new UsersService();
 
 router.get("/", async (req, res, next) => {
-  const users = await service.getUsers();
+  const users = await service.getUsers()
   res.status(200).json(users);
 });
 

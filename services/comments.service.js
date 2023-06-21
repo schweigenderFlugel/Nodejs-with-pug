@@ -1,18 +1,24 @@
+const boom = require("@hapi/boom");
 const CommentsColletion = require("../database/store/comments.store");
 
 const collection = new CommentsColletion();
 
 class CommentsService {
-  constructor() {}
-
+  
   async getComments() {
-    const data = await collection.getAllComments();
-    return data;
+    const comments = await collection.getAllComments();
+    if (comments.length === 0) {
+      throw boom.notFound("No Comments");
+    }
+    return comments;
   }
 
   async getCommentById(id) {
-    const data = await collection.getCommentById(id);
-    return data;
+    const comment = await collection.getCommentById(id);
+    if (!comment) {
+      throw boom.notFound("Comment Not Found!");
+    }
+    return comment;
   }
 
   async createComments(newData) {
@@ -21,13 +27,19 @@ class CommentsService {
   }
 
   async updateComments(id) {
-    const message = await collection.updateComment(id);
-    return message;
+    const updatedComment = await collection.updateComment(id);
+    if (!updatedComment) {
+      throw boom.notFound('Comment Not Found!');
+    }
+    return updatedComment;
   }
 
   async deleteComments(id) {
-    const message = await collection.deleteComment(id);
-    return message;
+    const deletedComment = await collection.deleteComment(id);
+    if (!deletedComment) {
+      throw boom.notFound('Comment Not Found!');
+    }
+    return deletedComment;
   }
 }
 

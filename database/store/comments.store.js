@@ -1,4 +1,3 @@
-const boom = require("@hapi/boom");
 const mongoose = require('mongoose');
 const { CommentsModel } = require('./connection');
 
@@ -7,9 +6,6 @@ class CommentsColletion {
     const comments = await CommentsModel.find()
       .populate({ path: 'article', select: 'title' })
       .exec();
-    if (comments.length === 0) {
-      return boom.notFound("No data in the database");
-    }
     return comments;
   }
 
@@ -21,7 +17,6 @@ class CommentsColletion {
         .exec();
       return comment;
     }
-    return boom.notFound("ObjectId invalid!");
   }
 
   async createComment(newData) {
@@ -38,9 +33,8 @@ class CommentsColletion {
     if (valid) {
       await CommentsModel.deleteOne({ _id: id });
       return "Successfully erased";
-    } 
-    return boom.notFound("ObjectId invalid!");
-  }
-}
+    }
+  };
+};
 
 module.exports = CommentsColletion;

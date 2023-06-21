@@ -6,7 +6,7 @@ const collection = new ArticlesColletion();
 class ArticlesService {
   async getArticles() {
     const articles = await collection.getAllArticles();
-    if (articles.length === 0) {
+    if (articles.length === 0 && !articles.isBlocked) {
       throw boom.notFound('no articles');
     }
     return articles;
@@ -16,6 +16,9 @@ class ArticlesService {
     const article = await collection.getArticleById(id);
     if (!article) {
       throw boom.notFound('article not found!');
+    }
+    if (article.isBlocked){
+      throw boom.unauthorized('no access to this article')
     }
     return article;
   }

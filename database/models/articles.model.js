@@ -9,13 +9,21 @@ const ArticlesSchema = new Schema({
   createdAt: {
     type: Date,
     required: true,
+    default: new Date(),
   },
   updatedAt: {
     type: Date,
+    required: true,
+    default: new Date(),
   },
   content: {
     type: String,
     required: true,
+  },
+  isBlocked: {
+    type: Boolean,
+    required: true,
+    default: true
   },
   author: {
     type: String,

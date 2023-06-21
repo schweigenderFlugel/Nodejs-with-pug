@@ -1,4 +1,3 @@
-const boom = require("@hapi/boom");
 const mongoose = require('mongoose');
 const { ArticlesModel } = require('./connection');
 
@@ -24,30 +23,30 @@ class ArticlesColletion {
   async createArticle(newData) {
     await ArticlesModel.create({
       ...newData,
-      createdAt: new Date(),
     });
   }
 
   async updateArticle(id, changes) {
     const valid = mongoose.isValidObjectId(id);
     if (valid) {
-      const updatedArticle = await ArticlesModel.findOneAndUpdate({
+      await ArticlesModel.findOneAndUpdate({
         id,
         title: changes.title,
         author: changes.author,
         content: changes.content,
         updatedAt: new Date(),
+        isBlocked: changes.isBlocked,
         $push: { comments: changes.comments, categories: changes.categories },
       });
-      return updatedArticle;
+      return 'Successfully updated';
     }
   }
 
   async deleteArticle(id) {
     const valid = mongoose.isValidObjectId(id);
     if (valid) {
-      await ArticlesModel.deleteOne({ _id: id });
-      return "Successfully erased";
+      await ArticlesModel.deleteOne({ _id: id })
+      return 'Successfully erased'
     }
   }
 }
