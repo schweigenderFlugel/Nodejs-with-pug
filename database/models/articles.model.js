@@ -1,11 +1,15 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-const ArticlesSchema = new Schema({
+const articleSchema = new Schema({
   title: {
     type: String,
     required: true,
   },
+  author: {
+    type: String,
+    required: true 
+  }, 
   createdAt: {
     type: Date,
     required: true,
@@ -25,19 +29,15 @@ const ArticlesSchema = new Schema({
     required: true,
     default: true
   },
-  author: {
-    type: String,
-    required: true 
-  }, 
-  comments: [{
-    type: Schema.Types.ObjectId,
-    ref: 'Comments',
-  }],
   categories: [{
     type: Schema.Types.ObjectId,
     ref: 'Categories',
+  }],
+  comments: [{
+    type: Schema.Types.ObjectId,
+    ref: 'Comments',
   }]
 });
 
-const ArticlesModel = mongoose.model('Articles', ArticlesSchema);
-module.exports = ArticlesModel;
+const ArticleModel = mongoose.model('Articles', articleSchema);
+module.exports = ArticleModel;

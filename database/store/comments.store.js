@@ -1,9 +1,9 @@
 const mongoose = require('mongoose');
-const { CommentsModel } = require('./connection');
+const { CommentModel } = require('./connection');
 
 class CommentsColletion {
   async getAllComments() {
-    const comments = await CommentsModel.find()
+    const comments = await CommentModel.find()
       .populate({ path: 'article', select: 'title' })
       .exec();
     return comments;
@@ -12,7 +12,7 @@ class CommentsColletion {
   async getCommentById(id) {
     const valid = mongoose.isValidObjectId(id);
     if (valid) {
-      const comment = await CommentsModel.findById(id)
+      const comment = await CommentModel.findById(id)
         .populate('article')
         .exec();
       return comment;
@@ -20,18 +20,18 @@ class CommentsColletion {
   }
 
   async createComment(newData) {
-    await CommentsModel.create(newData);
+    await CommentModel.create(newData);
   }
 
   async updateComment(id, changes) {
-    await CommentsModel.findOneAndUpdate(id, changes);
+    await CommentModel.findOneAndUpdate(id, changes);
     return "Modified successfully";
   }
 
   async deleteComment(id) {
     const valid = mongoose.isValidObjectId(id);
     if (valid) {
-      await CommentsModel.deleteOne({ _id: id });
+      await CommentModel.deleteOne({ _id: id });
       return "Successfully erased";
     }
   };

@@ -66,6 +66,8 @@
   }
 
   #chat-messages {
-    text-align: end;
+    align-items: end;
+    justify-content: end;
     margin-left: 50px;
+    overflow-y: scroll;
   }

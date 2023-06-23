@@ -1,14 +1,14 @@
 const mongoose = require("mongoose");
 const config = require("../../config/config");
 
-const ArticlesModel = require("../models/articles.model");
-const CommentsModel =  require("../models/comments.model");
-const CategoriesModel = require("../models/categories.model");
-const UsersModel = require("../models/users.model");
+const ArticleModel = require("../models/articles.model");
+const CommentModel =  require("../models/comments.model");
+const CategoryModel = require("../models/categories.model");
+const UserModel = require("../models/users.model");
 
 mongoose
   .connect(config.mongodbUri)
   .then(() => console.log("Connected to mongodb!"))
   .catch((err) => console.error(err));
 
-module.exports = { ArticlesModel, CommentsModel, CategoriesModel, UsersModel };
+module.exports = { ArticleModel, CommentModel, CategoryModel, UserModel };

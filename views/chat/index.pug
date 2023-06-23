@@ -1,20 +1,20 @@
 extends ../layout/index
 block content 
   body
-    h1 Socket Io
-    h2 Aquí tendrá lugar una sala de chat en tiempo real
     h2#text
     h2#user-connected
+    h3 Usuarios conectados 
+      span#users-number
     button#emit-to-server.btn Entrar
 
     main#chat-messages
 
-    main.container.py-2
+    footer.bg-dark
       form#chat-form
-        div.input-group.mb-3.w-50
+        div.input-group.mb-3.w-50.position-fixed.bottom-0.end-0.me-5
           input#msg.form-control(name="" rows="5")
           div.input-group-append
-            button.btn.btn-secondary Enviar
+            button.btn.btn-dark Enviar
     
     script(src="/socket.io/socket.io.js")
     script(src=`${socket}`)

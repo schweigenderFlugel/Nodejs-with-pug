@@ -1,9 +1,9 @@
 const mongoose = require('mongoose');
-const { ArticlesModel } = require('./connection');
+const { ArticleModel } = require('./connection');
 
 class ArticlesColletion {
   async getAllArticles() {
-    const articles = await ArticlesModel.find()
+    const articles = await ArticleModel.find()
       .populate({ path: "comments" })
       .populate({ path: "categories", select: 'name'})
       .limit(5)
@@ -13,7 +13,7 @@ class ArticlesColletion {
   async getArticleById(id) {
     const valid = mongoose.isValidObjectId(id);
     if (valid) {
-      const article = await ArticlesModel.findById(id)
+      const article = await ArticleModel.findById(id)
         .populate({ path: "comments", select: 'content' })
         .populate({ path: "categories", select: 'name'})
       return article;
@@ -29,7 +29,7 @@ class ArticlesColletion {
   async updateArticle(id, changes) {
     const valid = mongoose.isValidObjectId(id);
     if (valid) {
-      await ArticlesModel.findOneAndUpdate({
+      await ArticleModel.findOneAndUpdate({
         id,
         title: changes.title,
         author: changes.author,
@@ -45,7 +45,7 @@ class ArticlesColletion {
   async deleteArticle(id) {
     const valid = mongoose.isValidObjectId(id);
     if (valid) {
-      await ArticlesModel.deleteOne({ _id: id })
+      await ArticleModel.deleteOne({ _id: id })
       return 'Successfully erased'
     }
   }

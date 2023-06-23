@@ -1,29 +1,40 @@
 const mongoose = require('mongoose');
-const { CategoriesModel } = require('./connection')
+const { CategoryModel } = require('./connection')
 
 class CategoriesCollection {
   async getAllCategories() {
-    const categories = await CategoriesModel.find();
+    const categories = await CategoryModel.find();
     return categories;
   }
 
   async getCategoryById(id) {
     const valid = mongoose.isValidObjectId(id);
     if (valid) {
-      const category = await CategoriesModel.findById(id);
+      const category = await CategoryModel.findById(id);
       return category;
     }
   }
 
   async createCategory(newData) {
-    const newCategory = await CategoriesModel.create(newData);
+    const newCategory = await CategoryModel.create(newData);
     return newCategory;
+  }
+
+  async updateCategory(id, changes) {
+    const valid = mongoose.isValidObjectId(id);
+    if (valid) {
+      await CategoryModel.findOneAndUpdate({
+        id,
+        ...changes
+      })
+      return 'Successfully updated';
+    }
   }
 
   async deleteCategory(id) {
     const valid = mongoose.isValidObjectId(id);
     if (valid) {
-      await CategoriesModel.deleteOne({ _id: id });
+      await CategoryModel.deleteOne({ _id: id });
       return "Successfully erased";
     }
     return boom.badRequest("ObjectId invalid!");

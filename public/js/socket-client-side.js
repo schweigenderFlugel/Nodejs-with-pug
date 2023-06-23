@@ -37,6 +37,8 @@ emitToServer.addEventListener("click", () => {
     socket.emit("server", "Hola, servidor");
 })
 
+
+// NEW USER CONNECTED
 socket.on("everyone", message => {
     const text = document.querySelector("#user-connected");
     text.textContent = message;
@@ -44,6 +46,12 @@ socket.on("everyone", message => {
         text.classList.add('inactive');
     }, 2000);
     console.log(message);
+})
+
+// NUMBER OF USERS CONNECTED
+socket.on("users_connected", users => {
+    const usersConnected = document.querySelector("#users-number");
+    usersConnected.textContent = users;
 })
 
 // EMITTING THE MESSAGE TO THE SERVER
@@ -56,7 +64,7 @@ form.addEventListener('submit', (e) => {
     e.target.msg.focus();
 })
 
-// RECIEVING THE MESSAGE
+// RECIEVING THE MESSAGE FROM SERVER
 socket.on('message', message => {
     outputMessage(message);
 })
@@ -65,11 +73,11 @@ function outputMessage(message) {
     const div = document.createElement('div');
     div.classList.add('message');
     div.innerHTML = `<div style="width: 18rem; margin-bottom:10px" class="card">
-    <div class="card-body">
-      <h6 class="card-title">${message.username}</h6>
-      <p class="card-text">${message.text}</p>
-      <p class="card-subtitle mb-2 text-muted">${message.time}</p>
-    </div>
-  </div>`
+        <div class="card-body">
+            <h6 class="card-title">${message.username}</h6>
+            <p class="card-text">${message.text}</p>
+            <p class="card-subtitle mb-2 text-muted">${message.time}</p>
+        </div>
+    </div>`
     document.getElementById('chat-messages').appendChild(div);
 }
