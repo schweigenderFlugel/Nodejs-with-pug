@@ -1,0 +1,21 @@
+doctype html
+html 
+  head
+    meta(charset="UTF-8")
+    link(rel='stylesheet', href='/css/style.css')
+
+body
+  h1 Introducción
+  h2 Descripción
+  p= description
+  h2 Objetivos
+  p #{target}
+  p(styles="width: 60px")= lorem
+
+  
+  div.contenido
+    each noticia in news
+      p.news= noticia
+
+  footer= footer
+  img(src=`${images}`, alt="")
