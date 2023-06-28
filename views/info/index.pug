@@ -1,21 +1,16 @@
-doctype html
-html 
-  head
-    meta(charset="UTF-8")
-    link(rel='stylesheet', href='/css/style.css')
+extends ../layout/index
+block content
+    h1 Introducción
+    h2 Descripción
+    p= description
+    h2 Objetivos
+    p #{target}
+    p= lorem
 
-body
-  h1 Introducción
-  h2 Descripción
-  p= description
-  h2 Objetivos
-  p #{target}
-  p(styles="width: 60px")= lorem
-
-  
-  div.contenido
+    main.contenido
     each noticia in news
-      p.news= noticia
+      ul.caja
+        img(src=`${images}`, alt="artwork-01.jpg")
+        .caja__content: li=noticia
 
-  footer= footer
-  img(src=`${images}`, alt="")
+    footer= footer
