@@ -24,12 +24,26 @@ const socketIoServerSide = (io) => {
     // BROADCASTING WHO HAS JUST CONNECTED
     socket.broadcast.emit("everyone", socket.id + " se ha conectado");
 
+     // Join a room
+    socket.on('join', (roomName) => {
+      socket.join(roomName);
+      io.to(roomName).emit('roomJoined', `${socket.id} just joined the ${roomName}`);
+    });
+
+    // Leave a room
+    socket.on('leaveRoom', (room) => {
+      console.log(`${socket.id} has left room ${room}`);
+      socket.leave(room);
+      io.to(room).emit('roomLeft', `${socket.id} has left the room`);
+    });
+
+
     // RECIEVING MESSAGE FROM CLIENT SIDE AND SEND IT BACK TO THE CLIENT
     socket.on('chatMessage', (msg) => {
       io.emit('message', formatMessage(socket.id, msg));
     })
 
-    // 
+    // BROADCASTING WHO HAS JUST DISCONNECTED
     socket.on("disconnect", () => {
       socket.broadcast.emit("everyone", socket.id + " se ha desconectado");
       console.log("El socket " + socket.id + "se ha desconectado");

@@ -1,5 +1,6 @@
 const express = require("express");
 const path = require("path");
+const cors = require('cors');
 const { createServer } = require("http");
 const { Server } = require("socket.io");
 const swaggerUI = require("swagger-ui-express");
@@ -41,10 +42,27 @@ const createApp = () => {
   app.use(express.static(path.join(__dirname, "public")));
   app.use("/api-doc", swaggerUI.serve, swaggerUI.setup(swaggerJSDoc(swaggerSpec)));
 
+
+  const whitelist = ['http://localhost:8080']
+  const options = {
+    origin: (origin, callback) => {
+      if (whitelist.indexOf(origin) !== -1 || !origin) {
+        callback(null, true)
+      } else {
+        callback(new Error('not allowed by cors'))
+      }
+    },
+    optionsSucessStatus: 200
+  }
+  app.use(cors(options));
+
   // MUESTRA DE EXPRESS
   app.get("/", (req, res) => {
     res.send("Estoy escuchando desde mi express");
   });
+
+  // PASSPORT (MIDDLEWARE)
+  require('./utils/auth');
 
   // SOCKET.IO
   socketIoServerSide(io);

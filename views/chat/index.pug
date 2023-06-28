@@ -3,16 +3,19 @@ block content
   body
     h2#text
     h2#user-connected
-    h3 Usuarios conectados 
+    h3 Usuarios conectados:
       span#users-number
-    button#emit-to-server.btn Entrar
+    button#room2.btn.btn-success Entrar a sala 2
+    button#room3.btn.btn-success Entrar a sala 3
+    div#leave
+
 
     main#chat-messages
 
     footer.bg-dark
       form#chat-form
         div.input-group.mb-3.w-50.position-fixed.bottom-0.end-0.me-5
-          input#msg.form-control(name="" rows="5")
+          input#msg.form-control(name="" rows="2")
           div.input-group-append
             button.btn.btn-dark Enviar
     

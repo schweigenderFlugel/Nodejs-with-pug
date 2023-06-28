@@ -1,6 +1,6 @@
 
   #body-color {
-    width: 1280px;
+    width: 100%;
     text-align: center;
     background-color: rgb(139, 218, 139);
   }
@@ -50,19 +50,6 @@
 
   .inactive {
     display: none;
-  }
-
-  #emit-to-server {
-    background-color: rgb(126, 223, 126);
-    border: none;
-    border-radius: 5px;
-    width: 200px;
-    height: 35px;
-    cursor: pointer;
-  }
-
-  #emit-to-server:hover {
-    background-color: rgb(62, 199, 62);
   }
 
   #chat-messages {

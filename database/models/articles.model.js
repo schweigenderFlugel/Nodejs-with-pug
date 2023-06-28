@@ -27,7 +27,7 @@ const articleSchema = new Schema({
   isBlocked: {
     type: Boolean,
     required: true,
-    default: true
+    default: false
   },
   categories: [{
     type: Schema.Types.ObjectId,

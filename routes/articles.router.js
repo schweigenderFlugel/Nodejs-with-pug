@@ -1,9 +1,12 @@
 const express = require("express");
-const routes = express.Router();
+const passport = require("passport");
+
 const ArticlesService = require("../services/articles.service");
 const validatorHandler = require("../middlewares/validator.handler");
 const { createArticleSchema, updateArticleSchema } = require("../schemas/articles.schema");
+const { checkRoles } = require('../middlewares/auth.handler');
 
+const routes = express.Router();
 const service = new ArticlesService();
 
 /**
@@ -61,14 +64,18 @@ const service = new ArticlesService();
  *              type: object
  *              $ref: '#/components/schemas/articles'
  */
-routes.get("/", async (req, res, next) => {
-  try {
-    const articles = await service.getArticles();
-    res.status(200).json(articles);
-  } catch (error) {
-    next(error);
+routes.get("/", 
+  passport.authenticate('jwt', { session: false }), 
+  checkRoles('reader', 'writer', 'admin'), 
+  async (req, res, next) => {
+    try {
+      const articles = await service.getArticles();
+      res.status(200).json(articles);
+    } catch (error) {
+      next(error);
+    }
   }
-});
+);
 
 /**
  * @swagger
@@ -82,7 +89,7 @@ routes.get("/", async (req, res, next) => {
  *        schema: 
  *          type: string
  *        required: true
- *        description: the user id
+ *        description: the article id
  *    responses:
  *      200:
  *        description: the article id
@@ -94,15 +101,19 @@ routes.get("/", async (req, res, next) => {
  *      404: 
  *        description: article not found
  */
-routes.get("/:id", async (req, res, next) => {
-  try {
-    const id = req.params.id;
-    const article = await service.getArticleById(id);
-    res.status(200).json(article);
-  } catch (error) {
-    next(error);
+routes.get("/:id",
+  passport.authenticate('jwt', { session: false }), 
+  checkRoles('reader', 'writer', 'admin'), 
+  async (req, res, next) => {
+    try {
+      const id = req.params.id;
+      const article = await service.getArticleById(id);
+      res.status(200).json(article);
+    } catch (error) {
+      next(error);
+    }
   }
-});
+);
 
 /**
  * @swagger
@@ -118,11 +129,12 @@ routes.get("/:id", async (req, res, next) => {
  *            type: object
  *            $ref: '#/components/schemas/articles'
  *    responses:
- *      200:
+ *      201:
  *        description: new user created
  */
-routes.post(
-  "/",
+routes.post("/",
+  passport.authenticate('jwt', { session: false }), 
+  checkRoles('writer', 'admin'), 
   validatorHandler(createArticleSchema, "body"),
   async (req, res, next) => {
     const newData = req.body;
@@ -152,13 +164,14 @@ routes.post(
  *            type: object
  *            $ref: '#/components/schemas/articles'
  *    responses:
- *      200:
+ *      201:
  *        description: the article was updated
  *      404: 
  *        description: article not found
  */
-routes.patch(
-  "/:id",
+routes.patch("/:id",
+  passport.authenticate('jwt', { session: false }), 
+  checkRoles('reader', 'writer', 'admin'), 
   validatorHandler(updateArticleSchema, "body"),
   async (req, res, next) => {
     try {
@@ -186,12 +199,15 @@ routes.patch(
  *        required: true
  *        description: the user id
  *    responses:
- *      200:
+ *      201:
  *        description: the article was deleted
  *      404: 
  *        description: article not found
  */
-routes.delete("/:id", async (req, res, next) => {
+routes.delete("/:id",
+  passport.authenticate('jwt', { session: false }), 
+  checkRoles('writer', 'admin'), 
+  async (req, res, next) => {
   try {
     const id = req.params.id;
     const message = await service.deleteArticles(id);

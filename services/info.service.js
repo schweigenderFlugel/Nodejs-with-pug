@@ -5,8 +5,8 @@ const boom = require("@hapi/boom");
 
 const readFile = util.promisify(fs.readFile);
 const writeFile = util.promisify(fs.writeFile);
-const info = path.join(__dirname, "../public/info.json");
-const news = path.join(__dirname, "../public/news.json");
+const info = path.join(__dirname, "../public/json/info.json");
+const news = path.join(__dirname, "../public/json/news.json");
 
 class InfoService {
   constructor() {

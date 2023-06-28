@@ -9,9 +9,6 @@ class ArticlesService {
     if (articles.length === 0) {
       throw boom.notFound('no articles');
     }
-    if (articles.isBlocked) {
-      throw boom.notFound('no articles');
-    }
     return articles;
   }
 

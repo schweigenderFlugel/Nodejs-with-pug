@@ -6,6 +6,7 @@ const chatRoutes = require('./chat.router');
 const articlesRoutes = require('./articles.router');
 const commentsRoutes = require('./comments.router');
 const categoriesRoutes = require('./categories.router');
+const loginRoute = require('./login.router');
 
 const routerViews = (app) => {
     const router = express.Router();
@@ -16,6 +17,7 @@ const routerViews = (app) => {
     router.use('/articles', articlesRoutes);
     router.use('/comments', commentsRoutes);
     router.use('/categories', categoriesRoutes);
+    router.use('/login', loginRoute);
 }
 
 module.exports = routerViews;
