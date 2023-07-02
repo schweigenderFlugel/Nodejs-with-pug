@@ -7,6 +7,7 @@ const articlesRoutes = require('./articles.router');
 const commentsRoutes = require('./comments.router');
 const categoriesRoutes = require('./categories.router');
 const loginRoute = require('./login.router');
+const videoRoute = require('./video.router');
 
 const routerViews = (app) => {
     const router = express.Router();
@@ -18,6 +19,7 @@ const routerViews = (app) => {
     router.use('/comments', commentsRoutes);
     router.use('/categories', categoriesRoutes);
     router.use('/login', loginRoute);
+    router.use('/video',  videoRoute);
 }
 
 module.exports = routerViews;

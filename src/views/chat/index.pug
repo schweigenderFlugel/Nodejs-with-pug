@@ -9,13 +9,14 @@ block content
     button#room3.btn.btn-success Entrar a sala 3
     div#leave
 
-
-    main#chat-messages
+    form(name="myForm" action="/v1/api/chat" method="POST") 
+      main#chat-messages(name="message")
+        button.btn.btn-dark Guardar
 
     footer.bg-dark
       form#chat-form
         div.input-group.mb-3.w-50.position-fixed.bottom-0.end-0.me-5
-          input#msg.form-control(name="" rows="2")
+          input#msg.form-control(rows="2")
           div.input-group-append
             button.btn.btn-dark Enviar
     

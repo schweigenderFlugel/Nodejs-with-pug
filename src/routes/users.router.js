@@ -4,7 +4,6 @@ const passport = require('passport');
 const UsersService = require("../services/users.service");
 const validatorHandler = require("../middlewares/validator.handler");
 const { createUserSchema } = require("../schemas/users.schema");
-const { checkUserById } = require('../middlewares/auth.handler');
 
 const routes = express.Router();
 const service = new UsersService();

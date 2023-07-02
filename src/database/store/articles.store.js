@@ -4,7 +4,7 @@ const { ArticleModel } = require('./connection');
 class ArticlesColletion {
   async getAllArticles() {
     const articles = await ArticleModel.find()
-      .populate({ path: "comments" })
+      .populate({ path: "comments", select: 'content' })
       .populate({ path: "categories", select: 'name'})
       .limit(5)
     return articles;
