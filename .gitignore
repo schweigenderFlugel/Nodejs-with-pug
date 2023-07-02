@@ -220,4 +220,10 @@ $RECYCLE.BIN/
 *.gif
 *.png
 
+# Ignore videos
+*.mp4
+
+# Ignore coverage_e2e
+coverage_e2e
+
 # End of https://www.toptal.com/developers/gitignore/api/linux,windows,macos,node

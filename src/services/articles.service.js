@@ -18,7 +18,7 @@ class ArticlesService {
       throw boom.notFound('Article not found!');
     }
     if (article.isBlocked){
-      throw boom.unauthorized('No access to this article')
+      throw boom.conflict('This article is not avalible')
     }
     return article;
   }

@@ -14,12 +14,14 @@ router.post("/",
         sub: user.id,
         role: user.role,
       };
-      const acesssToken = jwt.sign(payload, config.jwtSecret, { expiresIn: '30m'});
+      const accessToken = jwt.sign(payload, config.jwtAccessSecret, { expiresIn: '30m'});
+      const refreshToken = jwt.sign(payload, config.jwtRefreshSecret, { expiresIn: "1d" });
+      res.cookie('jwt', refreshToken, { httpOnly: true, maxAge: 24 * 60 * 60 * 1000});
       res.json({
         email: user.email,
         username: user.username,
         role: user.role,
-        acesssToken,
+        accessToken,
       });
     } catch (error) {
       next(error);

@@ -1,10 +1,12 @@
 const express = require("express");
 const path = require("path");
 const cors = require('cors');
+const cookieParser = require('cookie-parser');
 const { createServer } = require("http");
 const { Server } = require("socket.io");
 const swaggerUI = require("swagger-ui-express");
 const swaggerJSDoc = require("swagger-jsdoc");
+const compression = require("compression");
 
 const routerViews = require("./routes");
 const socketIoServerSide = require('./utils/socket-server-side');
@@ -32,6 +34,8 @@ const createApp = () => {
     apis: ["./routes/*.js"],
   }
 
+  app.use(compression());
+
   // VIEWS ENGINE AND DIRECTORY
   app.set("view engine", "pug");
   app.set("views", path.join(__dirname, "/views"));
@@ -39,11 +43,12 @@ const createApp = () => {
   // MIDDLEWARES
   app.use(express.json());
   app.use(express.urlencoded({ extended: false }));
+  app.use(cookieParser());
   app.use(express.static(path.join(__dirname, "public")));
   app.use("/api-doc", swaggerUI.serve, swaggerUI.setup(swaggerJSDoc(swaggerSpec)));
 
 
-  const whitelist = ['http://localhost:8080']
+  const whitelist = ['http://localhost:3000']
   const options = {
     origin: (origin, callback) => {
       if (whitelist.indexOf(origin) !== -1 || !origin) {

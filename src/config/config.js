@@ -4,7 +4,8 @@ const config = {
     enviroment: process.env.NODE_ENV || "development",
     port: process.env.PORT,
     mongodbUri: process.env.MONGODB_URI,
-    jwtSecret: process.env.JWT_SECRET,
+    jwtAccessSecret: process.env.JWT_ACCESS_SECRET,
+    jwtRefreshSecret: process.env.JWT_ACCESS_REFRESH,
 }
 
 module.exports = config;

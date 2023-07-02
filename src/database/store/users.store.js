@@ -10,7 +10,7 @@ class UsersCollection {
 
   async createUser(newData) {
     try {
-      const newUser = await UserModel.create(newData);
+      await UserModel.create(newData);
       return 'User created successfully';
     } catch (error) {
       throw boom.unauthorized(error);
