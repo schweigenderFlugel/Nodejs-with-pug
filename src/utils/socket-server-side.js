@@ -5,7 +5,7 @@ const socketIoServerSide = (io) => {
   io.on("connection", (socket) => {
 
     socket.conn.once("upgrade", () => {
-      console.log("Hemos pasado de HTTP Long-Polling a ", socket.conn.transport.name);
+      console.log("Hemos pasado de HTTP Long-Polling a", socket.conn.transport.name);
     });
     socket.on("server", data => {
       console.log(data);
@@ -25,23 +25,22 @@ const socketIoServerSide = (io) => {
     socket.broadcast.emit("everyone", socket.id + " se ha conectado");
 
      // Join a room
-    socket.on('join', (roomName) => {
-      socket.join(roomName);
-      io.to(roomName).emit('roomJoined', `${socket.id} just joined the ${roomName}`);
+    socket.on('join-room', (room) => {
+      socket.join(room);
+      io.to(room).emit('room-joined', `${socket.id} just joined the ${room}`);
+      socket.on('chatMessage', (msg) => {
+        io.to(room).emit('message', formatMessage(socket.id, msg))
+        io.to(room).emit('room', room)
+      })
     });
 
     // Leave a room
-    socket.on('leaveRoom', (room) => {
-      console.log(`${socket.id} has left room ${room}`);
+    socket.on('leave-room', (room) => {
+      console.log(`${socket.id} has left ${room}`);
       socket.leave(room);
-      io.to(room).emit('roomLeft', `${socket.id} has left the room`);
+      io.to(room).emit('room-left', `${socket.id} has left the room`);
     });
 
-
-    // RECIEVING MESSAGE FROM CLIENT SIDE AND SEND IT BACK TO THE CLIENT
-    socket.on('chatMessage', (msg) => {
-      io.emit('message', formatMessage(socket.id, msg));
-    })
 
     // BROADCASTING WHO HAS JUST DISCONNECTED
     socket.on("disconnect", () => {

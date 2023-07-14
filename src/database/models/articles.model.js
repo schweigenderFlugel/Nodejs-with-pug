@@ -13,12 +13,13 @@ const articleSchema = new Schema({
   createdAt: {
     type: Date,
     required: true,
-    default: new Date(),
+    immutable: true,
+    default: () => Date.now(),
   },
   updatedAt: {
     type: Date,
     required: true,
-    default: new Date(),
+    default: () => Date.now(),
   },
   content: {
     type: String,

@@ -50,36 +50,60 @@ socket.on("users_connected", (users) => {
 // ENTER TO A ROOM
 const room2 = document.querySelector("#room2");
 const room3 = document.querySelector("#room3");
+const leaveRoom = document.querySelector("#leave");
+const form = document.getElementById("chat-form");
+form.style.display = "none"
+
 room2.addEventListener("click", () => {
-  socket.emit("join", "room 2");
+    form.style.display = "block"
+
+    // EMITTING THE MESSAGE TO THE SERVER
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const msg = e.target.msg.value;
+      socket.emit("chatMessage", msg);
+      e.target.msg.value = "";
+      e.target.msg.focus();
+    });
+
+  socket.emit("join-room", "room 2");
   room2.style.display = "none";
   room3.style.display = "none";
   const leaveRoomButton = document.createElement("div");
   leaveRoomButton.innerHTML = `<button id="leave-button" class="btn btn-danger">Dejar sala</button>`;
   document.getElementById("leave").appendChild(leaveRoomButton);
+  leaveRoom.addEventListener("click", () => {
+    socket.emit("leave-room", 'room 2');
+    leaveRoom.style.display = "none";
+  })
 });
 
 room3.addEventListener("click", () => {
-    socket.emit("join", "room 3");
-    room2.style.display = "none";
-    room3.style.display = "none";
-    const leaveRoomButton = document.createElement("div");
-    leaveRoomButton.innerHTML = `<button class="btn btn-danger">Dejar sala</button>`;
-    document.getElementById("leave").appendChild(leaveRoomButton);
+  form.style.display = "block";
+
+  // EMITTING THE MESSAGE TO THE SERVER
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const msg = e.target.msg.value;
+    socket.emit("chatMessage", msg);
+    e.target.msg.value = "";
+    e.target.msg.focus();
   });
 
-socket.on("roomJoined", (message) => {
-  console.log(message);
+  socket.emit("join-room", "room 3");
+  room2.style.display = "none";
+  room3.style.display = "none";
+  const leaveRoomButton = document.createElement("div");
+  leaveRoomButton.innerHTML = `<button class="btn btn-danger">Dejar sala</button>`;
+  document.getElementById("leave").appendChild(leaveRoomButton);
+  leaveRoom.addEventListener("click", () => {
+    socket.emit("leave-room", 'room 3');
+    leaveRoom.style.display = "none";
+  })
 });
 
-// EMITTING THE MESSAGE TO THE SERVER
-const form = document.getElementById("chat-form");
-form.addEventListener("submit", (e) => {
-  e.preventDefault();
-  const msg = e.target.msg.value;
-  socket.emit("chatMessage", msg);
-  e.target.msg.value = "";
-  e.target.msg.focus();
+socket.on("room-joined", (message) => {
+  console.log(message);
 });
 
 // RECIEVING THE MESSAGE FROM SERVER

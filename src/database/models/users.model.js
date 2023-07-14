@@ -9,6 +9,7 @@ const userSchema = new Schema({
     lowercase: true,
     unique: true,
     trim: true,
+    match: [/^\S[a-zA-Z0-9]+$/, "Only letters and numbers allowed for username"]
   },
   email: {
     type: String,
@@ -20,11 +21,21 @@ const userSchema = new Schema({
   password: {
     type: String,
     required: true,
+    trim: true
   },
   role: {
     type: String,
     required: true,
-    default: 'reader'
+    default: 'reader',
+  },
+  isActive: {
+    type: Boolean,
+    required: true,
+    default: true,
+  },
+  refreshToken: {
+    type: String,
+    default: null,
   }
 });
 

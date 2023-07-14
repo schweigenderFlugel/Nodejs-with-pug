@@ -7,6 +7,7 @@ const articlesRoutes = require('./articles.router');
 const commentsRoutes = require('./comments.router');
 const categoriesRoutes = require('./categories.router');
 const loginRoute = require('./login.router');
+const logoutRoute = require('./logout.router');
 const videoRoute = require('./video.router');
 
 const routerViews = (app) => {
@@ -19,6 +20,7 @@ const routerViews = (app) => {
     router.use('/comments', commentsRoutes);
     router.use('/categories', categoriesRoutes);
     router.use('/login', loginRoute);
+    router.use('/logout', logoutRoute);
     router.use('/video',  videoRoute);
 }
 

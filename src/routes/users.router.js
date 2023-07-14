@@ -5,10 +5,10 @@ const UsersService = require("../services/users.service");
 const validatorHandler = require("../middlewares/validator.handler");
 const { createUserSchema } = require("../schemas/users.schema");
 
-const routes = express.Router();
+const router = express.Router();
 const service = new UsersService();
 
-routes.post("/",
+router.post("/",
   validatorHandler(createUserSchema, "body"),
   async (req, res, next) => {
     const newData = req.body;
@@ -18,7 +18,7 @@ routes.post("/",
   }
 );
 
-routes.post("/mongodb",
+router.post("/mongodb",
   validatorHandler(createUserSchema, "body"),
   async (req, res, next) => {
     try {
@@ -31,7 +31,7 @@ routes.post("/mongodb",
   }
 );
 
-routes.patch("/mongodb/:id",
+router.patch("/mongodb/:id",
   passport.authenticate('jwt', { session: false }),
   async (req, res, next) => {
     try {
@@ -45,4 +45,4 @@ routes.patch("/mongodb/:id",
   }
 );
 
-module.exports = routes;
+module.exports = router;

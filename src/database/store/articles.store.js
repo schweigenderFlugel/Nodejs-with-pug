@@ -3,9 +3,10 @@ const { ArticleModel } = require('./connection');
 
 class ArticlesColletion {
   async getAllArticles() {
-    const articles = await ArticleModel.find()
+    const articles = await ArticleModel
+      .where({ isBlocked: false })
       .populate({ path: "comments", select: 'content' })
-      .populate({ path: "categories", select: 'name'})
+      .populate({ path: "categories", select: 'name' })
       .limit(5)
     return articles;
   }
@@ -21,9 +22,10 @@ class ArticlesColletion {
   }
 
   async createArticle(newData) {
-    await ArticlesModel.create({
+    await ArticleModel.create({
       ...newData,
     });
+    return "Article created successfully"
   }
 
   async updateArticle(id, changes) {

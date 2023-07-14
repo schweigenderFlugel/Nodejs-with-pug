@@ -34,6 +34,14 @@ class UsersService {
     return newData;
   }
 
+  async findUserByRefreshToken(refreshToken) {
+    const users = await collection.findUserByRefreshToken(refreshToken);
+    if (!users) {
+      throw boom.notFound("User Not Found!");
+    }
+    return users;
+  }
+
   async getUserByEmail(email) {
     const user = await collection.findUserByEmail(email);
     if (!user) {
@@ -55,6 +63,10 @@ class UsersService {
     newData.password = await bcrypt.hash(newData.password, 10);
     const newUser = await collection.createUser(newData);
     return newUser;
+  }
+
+  async saveRefreshToken(email, refreshToken) {
+    await collection.refreshToken(email, refreshToken)
   }
 }
 

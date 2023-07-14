@@ -8,12 +8,17 @@ class UsersCollection {
       return user;
   }
 
+  async findUserByRefreshToken(refreshToken) {
+    const users = await UserModel.findOne({ refreshToken });
+    return users;
+  }
+
   async createUser(newData) {
     try {
       await UserModel.create(newData);
       return 'User created successfully';
     } catch (error) {
-      throw boom.unauthorized(error);
+      throw boom.conflict(error);
     }
   }
 
@@ -26,6 +31,13 @@ class UsersCollection {
       });
       return 'password updated'
     }
+  }
+
+  async refreshToken(email, refreshToken) {
+    await UserModel.findOneAndUpdate({
+      email, 
+      refreshToken: refreshToken, 
+    });
   }
 
 }

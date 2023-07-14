@@ -7,7 +7,7 @@ const options = {
 }
 
 const jwtStratetegy = new Strategy(options, (payload, done) => {
-    return done(null, payload)
+    return done(null, payload);
 });
 
 module.exports = jwtStratetegy;
