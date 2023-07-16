@@ -7,7 +7,7 @@ const categoriesRoutes = require('./categories.router');
 const loginRoute = require('./login.router');
 const logoutRoute = require('./logout.router');
 
-const routerViews = (app) => {
+const routes = (app) => {
     const router = express.Router();
     app.use('/v1/api', router);
     router.use('/users', usersRoutes);
@@ -18,4 +18,4 @@ const routerViews = (app) => {
     router.use('/logout', logoutRoute);
 }
 
-module.exports = routerViews;
+module.exports = routes;
