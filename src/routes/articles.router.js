@@ -38,8 +38,7 @@ const service = new ArticlesService();
  *          type: array
  *          description: categories for the article
  *        comments:
- *          type: array
- *          description: comments about the article
+ *          $ref: '#/components/schemas/comments'
  *      required:
  *        - title
  *        - author
@@ -61,7 +60,7 @@ const service = new ArticlesService();
  *        content:
  *          application/json:
  *            schema:
- *              type: object
+ *              type: array
  *              $ref: '#/components/schemas/articles'
  */
 routes.get("/", 

@@ -31,7 +31,7 @@ const createApp = () => {
         }
       ]
     },
-    apis: ["./routes/*.js"],
+    apis: ["src/routes/*.js"],
   }
 
   app.use(compression());

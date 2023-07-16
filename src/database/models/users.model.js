@@ -9,7 +9,7 @@ const userSchema = new Schema({
     lowercase: true,
     unique: true,
     trim: true,
-    match: [/^\S[a-zA-Z0-9]+$/, "Only letters and numbers allowed for username"]
+    match: [/^\S[a-zA-Z0-9]{8,20}$/, "Only letters and numbers allowed for username"]
   },
   email: {
     type: String,

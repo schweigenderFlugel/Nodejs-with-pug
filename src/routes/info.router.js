@@ -1,8 +1,10 @@
 const express = require('express');
 const router = express.Router();
 const InfoService = require('../services/info.service');
+const ArticlesService = require('../services/articles.service');
 
 const service = new InfoService();
+const articles = new ArticlesService();
 
 router.get('/', async (req, res, next) => {
     const info = await service.getInfo();
@@ -20,6 +22,16 @@ router.get('/', async (req, res, next) => {
         images: info.info.images,
         moreInformation: info.info.moreInformation,
         news: news?.map((item) => ( item.noticia ))
+    })
+})
+
+router.get('/articles', async(req, res, next) => {
+    const article = await articles.getArticles();
+    return res.render('articles/index', {
+        title: article?.map((item) => ( item.title )),
+        text: article?.map((item) => ( item.content )),
+        comment: article?.map((item) => ( item.comments )),
+        category: article?.map((item) => ( item.categories ))
     })
 })
 
