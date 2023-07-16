@@ -5,8 +5,10 @@ class ArticlesColletion {
   async getAllArticles() {
     const articles = await ArticleModel
       .where({ isBlocked: false })
-      .populate({ path: "comments", select: 'content' })
-      .populate({ path: "categories", select: 'name' })
+      .populate({ path: 'comments', select: 'user content', options: 
+        { limit: 5 } 
+      })
+      .populate({ path: 'categories', select: 'name' })
       .limit(5)
     return articles;
   }
@@ -15,8 +17,8 @@ class ArticlesColletion {
     const valid = mongoose.isValidObjectId(id);
     if (valid) {
       const article = await ArticleModel.findById(id)
-        .populate({ path: "comments", select: 'content' })
-        .populate({ path: "categories", select: 'name'})
+        .populate({ path: 'comments', select: 'user content' })
+        .populate({ path: 'categories', select: 'name'})
       return article;
     }
   }

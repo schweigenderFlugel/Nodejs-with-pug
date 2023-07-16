@@ -8,4 +8,9 @@ const createArticleSchema = Joi.object({
     description: description.required(),
 });
 
-module.exports = { createArticleSchema };
+const updateArticleSchema = Joi.object({
+    name: name,
+    description: description
+})
+
+module.exports = { createArticleSchema, updateArticleSchema };

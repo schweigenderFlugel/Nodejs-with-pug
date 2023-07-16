@@ -8,9 +8,10 @@ const swaggerUI = require("swagger-ui-express");
 const swaggerJSDoc = require("swagger-jsdoc");
 const compression = require("compression");
 
-const routerViews = require("./routes");
+const routes = require("./routes");
 const socketIoServerSide = require('./utils/socket-server-side');
 const { boomErrorHandler, errorHandler } = require("./middlewares/error.handler");
+const swaggerSpec = require('./utils/swagger.doc');
 
 
 const createApp = () => {
@@ -18,21 +19,6 @@ const createApp = () => {
   const app = express();
   const httpServer = createServer(app);
   const io = new Server(httpServer);
-  const swaggerSpec = {
-    definition: {
-      openapi: "3.0.0",
-      info: {
-        title: "Node MongoDB API",
-        version: "1.0.0"
-      },
-      servers: [
-        {
-          url: "http://localhost:3000"
-        }
-      ]
-    },
-    apis: ["src/routes/*.js"],
-  }
 
   app.use(compression());
 
@@ -69,7 +55,7 @@ const createApp = () => {
   socketIoServerSide(io);
 
   // RUTAS DE LAS VISTAS
-  routerViews(app);
+  routes(app);
 
   // ERRORS HANDLERS
   app.use(boomErrorHandler);

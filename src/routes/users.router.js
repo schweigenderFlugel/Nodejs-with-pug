@@ -11,19 +11,9 @@ const service = new UsersService();
 router.post("/",
   validatorHandler(createUserSchema, "body"),
   async (req, res, next) => {
-    const newData = req.body;
-    const newUser = await service.createUser(newData);
-    delete newUser.password;
-    res.status(201).json(newUser);
-  }
-);
-
-router.post("/mongodb",
-  validatorHandler(createUserSchema, "body"),
-  async (req, res, next) => {
     try {
       const newData = req.body;
-      const newUser = await service.createUsersInMongodb(newData);
+      const newUser = await service.createUser(newData);
       res.status(201).json(newUser);
     } catch (error) {
       next(error);
@@ -31,7 +21,7 @@ router.post("/mongodb",
   }
 );
 
-router.patch("/mongodb/:id",
+router.patch("/:id",
   passport.authenticate('jwt', { session: false }),
   async (req, res, next) => {
     try {

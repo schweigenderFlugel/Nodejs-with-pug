@@ -24,8 +24,14 @@ class CommentsColletion {
   }
 
   async updateComment(id, changes) {
-    await CommentModel.findOneAndUpdate(id, changes);
-    return "Modified successfully";
+    const valid = mongoose.isValidObjectId(id);
+    if (valid) {
+      await CommentModel.findOneAndUpdate({
+        id, 
+        ...changes
+      });
+    }
+    return "Successfully updated";
   }
 
   async deleteComment(id) {

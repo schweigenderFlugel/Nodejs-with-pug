@@ -22,6 +22,7 @@ router.post("/",
       res.cookie('jwt', refreshToken, { httpOnly: true, maxAge: 24 * 60 * 60 * 1000})
       await userService.saveRefreshToken(user.email, refreshToken);
       res.json({
+        id: user._id,
         email: user.email,
         username: user.username,
         role: user.role,

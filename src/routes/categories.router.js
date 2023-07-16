@@ -3,7 +3,7 @@ const passport = require("passport");
 
 const validatorHandler = require("../middlewares/validator.handler");
 const CategoriesService = require("../services/categories.service");
-const { createArticleSchema } = require('../schemas/categories.schema');
+const { createArticleSchema, updateArticleSchema } = require('../schemas/categories.schema');
 const { checkRoles } = require('../middlewares/auth.handler')
 
 const routes = express.Router();
@@ -157,7 +157,7 @@ routes.post("/",
 routes.patch("/:id", 
   passport.authenticate('jwt', { session: false }), 
   checkRoles('admin'), 
-  validatorHandler(createArticleSchema, 'body'), 
+  validatorHandler(updateArticleSchema, 'body'), 
   async (req, res, next) => {
     const id = req.params.id;
     const changes = req.body;
@@ -187,8 +187,7 @@ routes.patch("/:id",
  */
 routes.delete("/:id", 
   passport.authenticate('jwt', { session: false }), 
-  checkRoles('admin'), 
-  validatorHandler(createArticleSchema, 'body'), 
+  checkRoles('admin'),
   async (req, res, next) => {
     try {
       const id = req.params.id;

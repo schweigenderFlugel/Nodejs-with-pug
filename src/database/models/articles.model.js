@@ -9,7 +9,11 @@ const articleSchema = new Schema({
   author: {
     type: String,
     required: true 
-  }, 
+  },
+  content: {
+    type: String,
+    required: true,
+  },
   createdAt: {
     type: Date,
     required: true,
@@ -20,10 +24,6 @@ const articleSchema = new Schema({
     type: Date,
     required: true,
     default: () => Date.now(),
-  },
-  content: {
-    type: String,
-    required: true,
   },
   isBlocked: {
     type: Boolean,

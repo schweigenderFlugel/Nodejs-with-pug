@@ -12,28 +12,6 @@ const users = path.join(__dirname, "../public/json/users.json");
 const collection = new UsersCollection()
 
 class UsersService {
-  constructor() {
-    this.datafile = users;
-  }
-
-  async createUser(newData) {
-    const data = await readFile(this.datafile, "utf8");
-    const users = JSON.parse(data);
-    const newUserId = users.length + 1;
-    newData.password = await bcrypt.hash(newData.password, 10);
-    newData.id = newUserId;
-    users.push(newData);
-    const newUser = JSON.stringify(users, null, 2);
-    await writeFile(this.datafile, newUser, (error) => {
-      if (error) {
-        throw boom.notAcceptable("Faltan datos");
-      } else {
-        console.log(newData);
-      }
-    });
-    return newData;
-  }
-
   async findUserByRefreshToken(refreshToken) {
     const users = await collection.findUserByRefreshToken(refreshToken);
     if (!users) {
@@ -59,7 +37,7 @@ class UsersService {
     return updatedPassword;
   }
 
-  async createUsersInMongodb(newData) {
+  async createUser(newData) {
     newData.password = await bcrypt.hash(newData.password, 10);
     const newUser = await collection.createUser(newData);
     return newUser;
