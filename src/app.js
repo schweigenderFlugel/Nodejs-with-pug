@@ -36,10 +36,6 @@ const createApp = () => {
 
   app.use(compression());
 
-  // VIEWS ENGINE AND DIRECTORY
-  app.set("view engine", "pug");
-  app.set("views", path.join(__dirname, "/views"));
-
   // MIDDLEWARES
   app.use(express.json());
   app.use(express.urlencoded({ extended: false }));

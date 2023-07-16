@@ -4,36 +4,6 @@ const InfoService = require('../services/info.service');
 const ArticlesService = require('../services/articles.service');
 
 const service = new InfoService();
-const articles = new ArticlesService();
-
-router.get('/', async (req, res, next) => {
-    const info = await service.getInfo();
-    const news = await service.getNews();
-    
-    // function getFullNews(item) {
-    //     return item.noticia;
-    // }
-
-    return res.render('info/index', {
-        description: info.info.description,
-        target: info.info.target,
-        footer: info.info.footer,
-        lorem: info.info.lorem,
-        images: info.info.images,
-        moreInformation: info.info.moreInformation,
-        news: news?.map((item) => ( item.noticia ))
-    })
-})
-
-router.get('/articles', async(req, res, next) => {
-    const article = await articles.getArticles();
-    return res.render('articles/index', {
-        title: article?.map((item) => ( item.title )),
-        text: article?.map((item) => ( item.content )),
-        comment: article?.map((item) => ( item.comments )),
-        category: article?.map((item) => ( item.categories ))
-    })
-})
 
 router.get('/news', async (req, res, next) => {
     const news = await service.getNews();
