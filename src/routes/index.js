@@ -6,6 +6,7 @@ const commentsRoutes = require('./comments.router');
 const categoriesRoutes = require('./categories.router');
 const loginRoute = require('./login.router');
 const logoutRoute = require('./logout.router');
+const passwordRecovery = require('./password-recovery.router');
 
 const routes = (app) => {
     const router = express.Router();
@@ -16,6 +17,7 @@ const routes = (app) => {
     router.use('/categories', categoriesRoutes);
     router.use('/login', loginRoute);
     router.use('/logout', logoutRoute);
+    router.use('/password-recovery', passwordRecovery)
 }
 
 module.exports = routes;
