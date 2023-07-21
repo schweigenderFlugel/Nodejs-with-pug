@@ -10,18 +10,21 @@ const sendMail = async (email, password) => {
     auth: {
       user: config.gmailAddress,
       pass: config.gmailPassword
-    }
+    },
+    tls: {
+      rejectUnauthorized: false
+  }
   });
 
   let info = await transporter.sendMail({
     from: 'TESTING <sender@gmail.com>',
-    to: 'facundoezcastro@gmail.com',
+    to: config.gmailAddress,
     subject: 'Olvidaste tu contraseña',
     text: 'Hola tarara',
     html: `<p>No me conoces, pero lo harás. Hemos generado una contraseña aleatoria ${password}</p>`
   });
 
-  return "Message sent: %s", info.messageId;
+  return ("Message sent: %s", info.messageId);
   
 }
 
