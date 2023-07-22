@@ -4,6 +4,7 @@ const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const { createServer } = require("http");
 const { Server } = require("socket.io");
+const useGraphQL = require('./graphql');
 const swaggerUI = require("swagger-ui-express");
 const swaggerJSDoc = require("swagger-jsdoc");
 const compression = require("compression");
@@ -56,6 +57,7 @@ const createApp = () => {
 
   // RUTAS DE LAS VISTAS
   routes(app);
+  useGraphQL(app);
 
   // ERRORS HANDLERS
   app.use(boomErrorHandler);

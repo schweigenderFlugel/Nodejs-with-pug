@@ -1,0 +1,31 @@
+type Query {
+    hello: String!
+    articles: Article!
+    article(id: ID!): Article!
+}
+
+type Mutation {
+  deleteArticles(id: ID!): ID!
+  createArticles(input: CreateArticleInput!): Article!
+  updateArticles(id: ID! input: UpdateArticleInput): Article!
+}
+
+type Article {
+    _id: ID!
+    title: String!
+    author: String!
+    content: String!
+}
+
+input CreateArticleInput {
+    title: String!
+    author: String!
+    content: String!
+}
+
+input UpdateArticleInput {
+    title: String!
+    author: String!
+    content: String!
+    isBlocked: Boolean!
+}
