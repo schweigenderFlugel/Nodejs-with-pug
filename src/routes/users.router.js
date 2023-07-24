@@ -26,8 +26,8 @@ router.patch("/:id",
   async (req, res, next) => {
     try {
       const id = req.params.id;
-      const changes = req.body;
-      const modifiedPassword = await service.updatePassword(id, changes);
+      const { password } = req.body;
+      const modifiedPassword = await service.updatePassword(id, password);
       res.status(201).json(modifiedPassword);
     } catch (error) {
       next(error);

@@ -8,6 +8,11 @@ class UsersCollection {
       return user;
   }
 
+  async findUserByEmail(email) {
+    const user = await UserModel.findOne({ email: email });
+    return user;
+}
+
   async findUserByRefreshToken(refreshToken) {
     const users = await UserModel.findOne({ refreshToken });
     return users;
@@ -22,12 +27,12 @@ class UsersCollection {
     }
   }
 
-  async updatePassword(id, changes) {
+  async updatePassword(id, password) {
     const valid = mongoose.isValidObjectId(id)
     if (valid) {
       await UserModel.findOneAndUpdate({
         id, 
-        password: changes.password 
+        password
       });
       return 'password updated'
     }
@@ -36,10 +41,16 @@ class UsersCollection {
   async refreshToken(email, refreshToken) {
     await UserModel.findOneAndUpdate({
       email, 
-      refreshToken: refreshToken, 
+      refreshToken, 
     });
   }
 
+  async recoveryToken(id, recoveryToken) {
+    await UserModel.findOneAndUpdate({
+      id, 
+      recoveryToken, 
+    });
+  }
 }
 
 module.exports = UsersCollection;

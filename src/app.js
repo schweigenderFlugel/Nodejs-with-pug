@@ -31,7 +31,8 @@ const createApp = () => {
   app.use("/api-doc", swaggerUI.serve, swaggerUI.setup(swaggerJSDoc(swaggerSpec)));
 
 
-  const whitelist = ['http://localhost:3000']
+  
+  const whitelist = ['http://localhost:3000', 'https://studio.apollographql.com']
   const options = {
     origin: (origin, callback) => {
       if (whitelist.indexOf(origin) !== -1 || !origin) {

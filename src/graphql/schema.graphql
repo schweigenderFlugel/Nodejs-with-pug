@@ -1,7 +1,7 @@
 type Query {
     hello: String!
-    articles: Article!
-    article(id: ID!): Article!
+    articles: [Article!]
+    article(id: String!): Article!
 }
 
 type Mutation {
@@ -15,6 +15,15 @@ type Article {
     title: String!
     author: String!
     content: String!
+    isBlocked: Boolean!
+    categories: String!
+    comments: [Comments!]!
+}
+
+type Comments {
+    _id: ID!
+    content: String!
+    user: String!
 }
 
 input CreateArticleInput {

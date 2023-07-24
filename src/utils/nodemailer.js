@@ -1,7 +1,7 @@
 const nodemailer = require('nodemailer');
 const config = require("../config/config");
 
-const sendMail = async (email, password) => {
+const sendMail = async (email) => {
   let transporter = nodemailer.createTransport({
     service: 'gmail',
     host: "smtp.gmail.com",
@@ -16,15 +16,9 @@ const sendMail = async (email, password) => {
   }
   });
 
-  let info = await transporter.sendMail({
-    from: 'TESTING <sender@gmail.com>',
-    to: config.gmailAddress,
-    subject: 'Olvidaste tu contraseña',
-    text: 'Hola tarara',
-    html: `<p>No me conoces, pero lo harás. Hemos generado una contraseña aleatoria ${password}</p>`
-  });
+  let info = await transporter.sendMail(email)
 
-  return ("Message sent: %s", info.messageId);
+  return `Message sent: %s", ${info.messageId}`;
   
 }
 

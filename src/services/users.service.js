@@ -1,14 +1,8 @@
-const fs = require("fs");
-const util = require("util");
-const path = require("path");
 const boom = require("@hapi/boom");
 const bcrypt = require("bcrypt");
 
 const UsersCollection = require('./../database/store/users.store')
 
-const readFile = util.promisify(fs.readFile);
-const writeFile = util.promisify(fs.writeFile);
-const users = path.join(__dirname, "../public/json/users.json");
 const collection = new UsersCollection()
 
 class UsersService {
@@ -29,12 +23,13 @@ class UsersService {
   }
 
   async updatePassword(id, changes) {
-    changes.password = await bcrypt.hash(changes.password, 10);
-    const updatedPassword = await collection.updatePassword(id, changes);
+    const hash = await bcrypt.hash(changes, 10);
+    const updatedPassword = await collection.updatePassword(id, hash);
     if (!updatedPassword) {
       throw boom.unauthorized('An error just happened!');
     }
     return updatedPassword;
+    
   }
 
   async createUser(newData) {
@@ -45,6 +40,10 @@ class UsersService {
 
   async saveRefreshToken(email, refreshToken) {
     await collection.refreshToken(email, refreshToken)
+  }
+
+  async saveRecoveryToken(id, recoveryToken) {
+    await collection.recoveryToken(id, recoveryToken)
   }
 }
 
