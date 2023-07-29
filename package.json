@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "nodemon ./src/index.js",
+    "start": "node ./src/index.js",
     "e2e": "jest --config ./jest-e2e.json --verbose --detectOpenHandles --forceExit --coverage"
   },
   "engines": {
