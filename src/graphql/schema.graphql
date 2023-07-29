@@ -2,6 +2,8 @@ type Query {
     hello: String!
     articles: [Article!]
     article(id: String!): Article!
+    comments: [Comments!]
+    comment(id: String!): Comments!
 }
 
 type Mutation {
@@ -16,8 +18,14 @@ type Article {
     author: String!
     content: String!
     isBlocked: Boolean!
-    categories: String!
+    categories: [Category!]!
     comments: [Comments!]!
+}
+
+type Category {
+    _id: ID!
+    name: String!
+    description: String!
 }
 
 type Comments {
