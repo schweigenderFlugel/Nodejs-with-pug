@@ -32,7 +32,7 @@ const createApp = () => {
 
 
   
-  const whitelist = ['http://localhost:3000', 'https://studio.apollographql.com']
+  const whitelist = ['http://localhost:3000', 'https://studio.apollographql.com', 'http://localhost:5173']
   const options = {
     origin: (origin, callback) => {
       if (whitelist.indexOf(origin) !== -1 || !origin) {
