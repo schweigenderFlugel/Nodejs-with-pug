@@ -31,7 +31,7 @@ const createApp = () => {
   app.use("/api-doc", swaggerUI.serve, swaggerUI.setup(swaggerJSDoc(swaggerSpec)));
 
 
-  
+  /*
   const whitelist = ['http://localhost:3000', 'https://studio.apollographql.com', 'http://localhost:5173']
   const options = {
     origin: (origin, callback) => {
@@ -44,6 +44,7 @@ const createApp = () => {
     optionsSucessStatus: 200
   }
   app.use(cors(options));
+  */
 
   // MUESTRA DE EXPRESS
   app.get("/", (req, res) => {
