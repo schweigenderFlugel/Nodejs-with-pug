@@ -23,8 +23,6 @@ router.post("/",
       await userService.saveRefreshToken(user.email, refreshToken);
       res.json({
         id: user._id,
-        email: user.email,
-        username: user.username,
         role: user.role,
         accessToken,
       });

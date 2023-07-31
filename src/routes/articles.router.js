@@ -129,7 +129,7 @@ routes.get("/:id",
  *            $ref: '#/components/schemas/articles'
  *    responses:
  *      201:
- *        description: new user created
+ *        description: new article created
  */
 routes.post("/",
   passport.authenticate('jwt', { session: false }), 
